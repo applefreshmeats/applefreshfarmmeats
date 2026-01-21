@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apple Fresh Farm Meat </title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+</head>
+<body>
+<header>
+<div class="logo"><img src="images/logo.png" alt="Logo"></div>
+<nav>
+<a href="index.html">Home</a>
+<a href="mutton.html">Mutton</a>
+<a href="chicken.html">Chicken</a>
+<a href="contact.html">Contact</a>
+</nav>
+<div class="icons">
+<i class="fas fa-shopping-cart"></i>
+<!-- Search bar -->
+<div id="searchBar" class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+</div>
+<a href="login.html" class="login-btn">
+  <i class="fas fa-user-shield"></i> 
+</a>
+</div>
+
+</header>
+<section class="banner">
+<h1> Apple Fresh Farm Meat </h1>
+</section>
+<div class="promises-tagline">
+    <h2>Farm-to-Door Fresh Delivery</h2>
+  </div>
+<section class="promises">
+  <!-- Highlighted Tagline -->
+  
+  <!-- Promise Cards -->
+  <div class="promise-card">
+    <img src="images/fresh.png" alt="Fresh & Hygienic">
+    <h3>100% Fresh & Hygienic</h3>
+    <p>Our meats are sourced fresh from farms and delivered to your doorstep daily.</p>
+  </div>
+  <div class="promise-card">
+    <img src="images/guarantee.png" alt="Farm-to-Door Guarantee">
+    <h3>Farm-to-Door Guarantee</h3>
+    <p>We ensure quality, hygiene, and taste straight from the farm to your kitchen.</p>
+  </div>
+  <div class="promise-card">
+    <img src="images/trusted.png" alt="Trusted by Families">
+    <h3>Trusted by Families</h3>
+    <p>Thousands of happy customers trust us for their daily fresh meat needs.</p>
+  </div>
+  
+</section>
+
+<section class="products">
+<div onclick="location.href='chicken.html'"><img src="images/chicken1.png" alt="Chicken"><span>Chicken</span></div>
+<div onclick="location.href='mutton.html'"><img src="images/mutton1.png" alt="Mutton"><span>Mutton</span></div>
+</section>
+<section class="services">
+<h2>Our Services</h2>
+<div class="service-cards">
+<div><h3>How to Order</h3><p>Select your favorite products and place your order with ease.</p></div>
+<div><h3>Where to Get</h3><p>We deliver fresh meats directly from trusted farms to your home.</p></div>
+<div><h3>Timely Delivery</h3><p>Get your products delivered quickly and on time, every day.</p></div>
+</div>
+</section>
+<footer>
+  <div class="footer-left">
+    <p>&copy; 2026, AppleFreshFarmMeats</p>
+  </div>
+  <div class="footer-right">
+    <a href="contact.html#privacy">Privacy Policy</a>
+    <a href="contact.html#refund">Return and Refund Policy</a>
+    <a href="contact.html#terms">Terms of Service</a>
+    <a href="contact.html#shipping">Shipping Policy</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <div class="social">
+    <i class="fab fa-facebook-f" id="fbLink"></i>
+    <i class="fab fa-instagram" id="instaLink"></i>
+  </div>
+</footer>
+
+<script>
+// Social links
+document.getElementById("fbLink").onclick = () => {
+  window.open("https://www.facebook.com/profile.php?id=61586898145930", "_blank");
+};
+
+document.getElementById("instaLink").onclick = () => {
+  window.open("https://www.instagram.com/applefreshfarmmeats/", "_blank");
+};
+</script>
+
+<!-- Floating Live Chat Button -->
+<a href="https://wa.me/+919600391896" target="_blank" class="live-chat-btn">
+  <i class="fab fa-whatsapp"></i> Live Chat
+</a>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owner Login - AppleFreshFarmMeats</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; font-family: 'Roboto', sans-serif; }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f4f4f9;
+  }
+  .login-container {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    width: 350px;
+    text-align: center;
+  }
+  .login-container h2 {
+    margin-bottom: 25px;
+    color: #333;
+  }
+  .input-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .input-group input {
+    width: 100%;
+    padding: 12px 40px 12px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  .input-group i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    background: #25D366;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover {
+    background: #1ebe5b;
+  }
+  .forgot {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #888;
+    text-decoration: none;
+  }
+  .forgot:hover {
+    color: #25D366;
+  }
+  @media(max-width:400px){
+    .login-container{ width:90%; padding:30px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+  <h2>Owner Login</h2>
+  <form id="loginForm">
+    <div class="input-group">
+      <input type="text" id="username" placeholder="Username" required>
+      <i class="fas fa-user"></i>
+    </div>
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Password" required>
+      <i class="fas fa-lock"></i>
+    </div>
+    <button type="submit">Login</button>
+    <a href="#" class="forgot">Forgot Password?</a>
+  </form>
+</div>
+
+<script>
+  // Owner credentials
+  const ownerUsername = "admin";       // Change to your owner username
+  const ownerPassword = "applefresh";  // Change to your owner password
+
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Prevent form submission
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if(username === ownerUsername && password === ownerPassword) {
+      alert("Login successful!");
+      window.location.href = "dashboard.html"; // Redirect to dashboard
+    } else {
+      alert("Invalid username or password!");
+    }
+  });
+</script>
+
+</body>
+</html>

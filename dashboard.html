@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owner Dashboard - AppleFreshFarmMeats</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; font-family: 'Roboto', sans-serif; }
+  body { background:#f4f4f9; min-height:100vh; }
+  header {
+    background: #25D366; color: #fff; padding: 15px 20px;
+    display:flex; justify-content: space-between; align-items: center;
+  }
+  header h1 { font-size: 22px; }
+  header .logout-btn {
+    background:#fff; color:#25D366; padding:8px 15px; border:none;
+    border-radius:6px; cursor:pointer; transition:0.3s;
+  }
+  header .logout-btn:hover { background:#e2e2e2; }
+
+  .dashboard-container {
+    display: flex; flex-wrap: wrap; padding: 20px; gap:20px;
+  }
+  .card {
+    background: #fff; border-radius: 10px; padding: 20px; flex:1 1 250px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  .card h3 { margin-bottom: 15px; color:#333; }
+  .card p { font-size: 14px; color:#666; margin-bottom:10px; }
+
+  .orders-table {
+    width: 100%; border-collapse: collapse; margin-top:20px;
+  }
+  .orders-table th, .orders-table td {
+    border:1px solid #ddd; padding: 10px; text-align:left;
+  }
+  .orders-table th { background:#25D366; color:#fff; }
+  .orders-table tr:nth-child(even) { background:#f9f9f9; }
+  .orders-table tr:hover { background:#e0ffe0; }
+
+  .status-new { color: #fff; background: #25D366; padding: 2px 6px; border-radius:4px; }
+  .status-processed { color: #fff; background: #f39c12; padding: 2px 6px; border-radius:4px; }
+  .status-delivered { color: #fff; background: #3498db; padding: 2px 6px; border-radius:4px; }
+
+  @media(max-width:768px){
+    .dashboard-container { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AppleFreshFarmMeats Dashboard</h1>
+  <button class="logout-btn" onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></button>
+</header>
+
+<div class="dashboard-container">
+  <div class="card">
+    <h3>Total Orders</h3>
+    <p id="totalOrders">0</p>
+  </div>
+  <div class="card">
+    <h3>New Orders</h3>
+    <p id="newOrders">0</p>
+  </div>
+  <div class="card">
+    <h3>Processed Orders</h3>
+    <p id="processedOrders">0</p>
+  </div>
+  <div class="card">
+    <h3>Delivered Orders</h3>
+    <p id="deliveredOrders">0</p>
+  </div>
+</div>
+
+<div class="card" style="width:95%; margin:20px auto;">
+  <h3>Recent Orders</h3>
+  <table class="orders-table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer Name</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="ordersTableBody">
+      <!-- Orders will be populated by JS -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // Sample order data (replace with backend or Google Sheet integration)
+  const orders = [
+    {id: 101, name: "Ravi", product:"Boneless Chicken 500g", qty:2, price:600, status:"new"},
+    {id: 102, name: "Sita", product:"Mutton Boneless 1Kg", qty:1, price:700, status:"processed"},
+    {id: 103, name: "Karthik", product:"Country Chicken 1Kg", qty:3, price:1050, status:"delivered"},
+    {id: 104, name: "Anita", product:"Mutton Ribs 500g", qty:2, price:700, status:"new"}
+  ];
+
+  function populateDashboard() {
+    let total = orders.length;
+    let newCount = orders.filter(o=>o.status==="new").length;
+    let processedCount = orders.filter(o=>o.status==="processed").length;
+    let deliveredCount = orders.filter(o=>o.status==="delivered").length;
+
+    document.getElementById("totalOrders").innerText = total;
+    document.getElementById("newOrders").innerText = newCount;
+    document.getElementById("processedOrders").innerText = processedCount;
+    document.getElementById("deliveredOrders").innerText = deliveredCount;
+
+    const tbody = document.getElementById("ordersTableBody");
+    tbody.innerHTML = "";
+    orders.forEach(order => {
+      let statusClass = order.status==="new" ? "status-new" : order.status==="processed" ? "status-processed" : "status-delivered";
+      tbody.innerHTML += `
+        <tr>
+          <td>${order.id}</td>
+          <td>${order.name}</td>
+          <td>${order.product}</td>
+          <td>${order.qty}</td>
+          <td>₹${order.price}</td>
+          <td><span class="${statusClass}">${order.status.toUpperCase()}</span></td>
+        </tr>
+      `;
+    });
+  }
+
+  function logout() {
+    if(confirm("Do you want to logout?")) {
+      window.location.href = "login.html";
+    }
+  }
+
+  populateDashboard();
+</script>
+<script>
+const WEB_APP_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+
+async function loadOrders() {
+  const res = await fetch(WEB_APP_URL);
+  const orders = await res.json();
+
+  document.getElementById("totalOrders").innerText = orders.length;
+  document.getElementById("newOrders").innerText =
+    orders.filter(o => o.Status === "New").length;
+
+  const tbody = document.getElementById("ordersTableBody");
+  tbody.innerHTML = "";
+
+  orders.forEach(o => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${o.OrderID}</td>
+        <td>${o.CustomerName}</td>
+        <td>${o.Product}</td>
+        <td>${o.Quantity}</td>
+        <td>₹${o.Price}</td>
+        <td><span class="status-new">${o.Status}</span></td>
+      </tr>`;
+  });
+}
+
+loadOrders();
+</script>
+</body>
+</html>
