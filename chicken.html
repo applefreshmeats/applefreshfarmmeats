@@ -1,445 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chicken Products</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-<style>
-/* ----- PRODUCT GRID ----- */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-  gap: 20px;
-  padding: 20px;
-}
-.product-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  text-align: center;
-}
-.product-card img {
-  width: 70%;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-.qty-control {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-top: 10px;
-}
-.qty-control button {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: #e53935;
-  color: #fff;
-  font-size: 20px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.qty-control span {
-  font-size: 16px;
-  font-weight: bold;
-}
+  <meta charset="UTF-8">
+  <title>Chicken – Apple Fresh Farm Meats</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { text-align: center; }
 
-/* ----- CART ICON ----- */
-.cart-icon {
-  position: fixed;
-  top: 15px;
-  right: 20px;
-  font-size: 28px;
-  cursor: pointer;
-  z-index: 1000;
-  color: #e53935;
-}
-#cart-count {
-  background: #fff;
-  color: #e53935;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 2px 6px;
-  border-radius: 50%;
-  position: absolute;
-  top: -10px;
-  right: -10px;
-}
-
-/* ----- CART POPUP ----- */
-.cart-modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-.cart-box {
-  background: #fff;
-  width: 90%;
-  max-width: 400px;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-.cart-box h3 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-.cart-box p {
-  margin: 5px 0;
-}
-.cart-box h4 {
-  margin-top: 15px;
-  text-align: center;
-}
-/* ----- WHATSAPP BUTTON ----- */
-#whatsappOrder {
-  display: block;
-  width: 100%;
-  background: #25D366;
-  color: #fff;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  margin-top: 10px;
-  cursor: pointer;
-}
- html {
-      scroll-behavior: smooth;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
     }
-    .policy-section {
-      padding: 50px 20px;
-      background: #f9f9f9;
-      margin-top: 30px;
+
+    .card {
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .price { font-weight: bold; margin: 8px 0; }
+
+    button {
+      padding: 6px 12px;
+      background: green;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #cartBtn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: darkred;
+    }
+
+    #cartModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+    }
+
+    #cartBox {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
       border-radius: 8px;
     }
-    .policy-section h3 {
-      margin-bottom: 15px;
+
+    .cart-item {
+      border-bottom: 1px solid #ddd;
+      padding: 6px 0;
     }
-</style>
+
+    input, textarea {
+      width: 100%;
+      margin: 5px 0;
+      padding: 6px;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-<div class="logo"><img src="images/logo.png" alt="Logo"></div>
-<nav>
-<a href="index.html">Home</a>
-<a href="mutton.html">Mutton</a>
-<a href="chicken.html">Chicken</a>
-<a href="contact.html">Contact</a>
-</nav>
-<div class="icons">
-<div class="cart-icon" onclick="openCart()">
-<i class="fas fa-shopping-cart"></i>
-<span id="cart-count">0</span>
-</div>
-<!-- Search bar -->
-<div id="searchBar" class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
-</div>
-</div>
-</header>
+<h1>🐔 Chicken Products</h1>
 
-<!-- PRODUCTS GRID -->
-<section class="products-grid">
-  
-  <div class="product-card">
-    <img src="images/chicken/Boneless Chicken 500g.png" alt="Boneless Chicken 500g">
-    <h3>Boneless Chicken 500g</h3>
-    <p>Rs. 300</p>
-    <div class="qty-control">
-      <button onclick="decreaseQty('Boneless Chicken 500g',300,'500g')">−</button>
-      <span id="qty-Boneless Chicken 500g">0</span>
-      <button onclick="increaseQty('Boneless Chicken 500g',300,'500g')">+</button>
-    </div>
-  </div>
-  <div class="product-card">
-    <img src="images/chicken/Boneless Chicken1.png" alt="Boneless Chicken">
-    <h3>Boneless Chicken 1Kg</h3>
-    <p>Rs. 550</p>
-    <div class="qty-control">
-      <button onclick="decreaseQty('Boneless Chicken 1Kg', 550, '1Kg')">−</button>
-      <span id="qty-Boneless Chicken 1Kg">0</span>
-      <button onclick="increaseQty('Boneless Chicken 1Kg', 550, '1Kg')">+</button>
-    </div>
-  </div>
+<button id="cartBtn" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
 
-  <div class="product-card">
-    <img src="images/chicken/chicken 1kg.png" alt="Full Chicken with skin">
-    <h3>Full Chicken with skin 1Kg</h3>
-    <p>Rs. 400</p>
-    <div class="qty-control">
-      <button onclick="decreaseQty('Full Chicken with skin 1Kg', 400, '1Kg')">−</button>
-      <span id="qty-Full Chicken with skin 1Kg">0</span>
-      <button onclick="increaseQty('Full Chicken with skin 1Kg', 400, '1Kg')">+</button>
-    </div>
-  </div>
+<div class="grid" id="productGrid"></div>
 
-  <div class="product-card">
-    <img src="images/chicken/chicken 500.png" alt="Chicken 500g">
-    <h3>Chicken 500g</h3>
-    <p>Rs. 350</p>
-    <div class="qty-control">
-      <button onclick="decreaseQty('Chicken 500g', 350, '500g')">−</button>
-      <span id="qty-Chicken 500g">0</span>
-      <button onclick="increaseQty('Chicken 500g', 350, '500g')">+</button>
-    </div>
-  </div>
-
-  <div class="product-card">
-    <img src="images/chicken/chicken drumsticks.png" alt="Chicken drumsticks">
-    <h3>Chicken drumsticks 500g</h3>
-    <p>Rs. 350</p>
-    <div class="qty-control">
-      <button onclick="decreaseQty('Chicken drumsticks 500g', 350, '500g')">−</button>
-      <span id="qty-Chicken drumsticks 500g">0</span>
-      <button onclick="increaseQty('Chicken drumsticks 500g', 350, '500g')">+</button>
-    </div>
-  </div>
-
-  <div class="product-card">
-    <img src="images/chicken/chicken wings.png" alt="Chicken wings">
-    <h3>Chicken wings</h3>
-    <p>Rs. 350</p>
-    <div class="qty-control">
-      <button onclick="decreaseQty('Chicken wings', 350, '')">−</button>
-      <span id="qty-Chicken wings">0</span>
-      <button onclick="increaseQty('Chicken wings', 350, '')">+</button>
-    </div>
-  </div>
-
-  <div class="product-card">
-    <img src="images/chicken/chicken 1kg.png" alt="Full Chicken without skin">
-    <h3>Full Chicken without skin</h3>
-    <p>Rs. 350</p>
-    <div class="qty-control">
-      <button onclick="decreaseQty('Full Chicken without skin', 350, '1Kg')">−</button>
-      <span id="qty-Full Chicken without skin">0</span>
-      <button onclick="increaseQty('Full Chicken without skin', 350, '1Kg')">+</button>
-    </div>
-  </div>
-
-  <div class="product-card">
-    <img src="images/chicken/country chicken 500g.png" alt="Country Chicken 500g">
-    <h3>Country Chicken 500g</h3>
-    <p>Rs. 350</p>
-    <div class="qty-control">
-      <button onclick="decreaseQty('Country Chicken 500g', 350, '500g')">−</button>
-      <span id="qty-Country Chicken 500g">0</span>
-      <button onclick="increaseQty('Country Chicken 500g', 350, '500g')">+</button>
-    </div>
-  </div>
-
-  <div class="product-card">
-    <img src="images/chicken/country chicken 1kg.png" alt="Country Chicken 1Kg">
-    <h3>Country Chicken 1Kg</h3>
-    <p>Rs. 350</p>
-    <div class="qty-control">
-      <button onclick="decreaseQty('Country Chicken 1Kg', 350, '1Kg')">−</button>
-      <span id="qty-Country Chicken 1Kg">0</span>
-      <button onclick="increaseQty('Country Chicken 1Kg', 350, '1Kg')">+</button>
-    </div>
-  </div>
-
-</section>
-
-  <!-- Repeat for all other products, same structure -->
-</section>
-
-<!-- CART POPUP -->
-<div class="cart-modal" id="cartModal">
-  <div class="cart-box">
-    <h3>Your Order</h3>
+<!-- CART MODAL -->
+<div id="cartModal">
+  <div id="cartBox">
+    <h2>Your Order</h2>
     <div id="cartItems"></div>
-    <h4 id="cartTotal"></h4>
-    <button id="whatsappOrder" onclick="sendWhatsApp()">Order on WhatsApp</button>
-    <button onclick="closeCart()" style="width:100%;margin-top:10px;">Close</button>
+    <h3>Total: ₹<span id="cartTotal">0</span></h3>
+
+    <h3>Customer Details</h3>
+    <input id="custName" placeholder="Name">
+    <input id="custPhone" placeholder="Phone">
+    <input id="custEmail" placeholder="Email">
+    <textarea id="custAddress" placeholder="Address"></textarea>
+
+    <button onclick="placeOrder()">Order via WhatsApp</button>
+    <button onclick="closeCart()">Close</button>
   </div>
 </div>
 
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyRbetJmt5sP-z4ryodvbt23nKOyODXGX1BdHfKw5FkdLra2we6FkkCTE3zzPF0whFMSA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzDKXX1UoJjt6IKDHOhWMKPvSUaZqeD1fXWqp6r9L3AiMDUf9RJXLOe-Yuo9mnTLYc/exec";
+const CART_KEY = "applefarm_cart";
 
-function saveOrderToSheet(totalAmount) {
-  if (Object.keys(cart).length === 0) return;
-
-  let items = [];
-  for (let item in cart) {
-    items.push(
-      `${item} (${cart[item].qty}) x ${cart[item].count}`
-    );
-  }
-
-  const payload = {
-    orderId: "ORD-" + Date.now(),
-    items: items.join(" | "),
-    total: totalAmount,
-    source: "Website"
-  };
-
-  fetch(WEB_APP_URL, {
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.text())
-  .then(data => console.log("Saved:", data))
-  .catch(err => console.error("Error:", err));
-}
-</script>
-
-<footer>
-  <div class="footer-left">
-    <p>&copy; 2026, AppleFreshFarmMeats</p>
-  </div>
-  <div class="footer-right">
-    <a href="contact.html#privacy">Privacy Policy</a>
-    <a href="contact.html#refund">Return and Refund Policy</a>
-    <a href="contact.html#terms">Terms of Service</a>
-    <a href="contact.html#shipping">Shipping Policy</a>
-    <a href="contact.html">Contact Us</a>
-  </div>
-  <div class="social">
-    <i class="fab fa-facebook-f" id="fbLink"></i>
-    <i class="fab fa-instagram" id="instaLink"></i>
-  </div>
-</footer>
-
-<script>
-// Social links
-document.getElementById("fbLink").onclick = () => {
-  window.open("https://www.facebook.com/profile.php?id=61586898145930", "_blank");
-};
-
-document.getElementById("instaLink").onclick = () => {
-  window.open("https://www.instagram.com/applefreshfarmmeats/", "_blank");
-};
-</script>
-
-
-<script>
-let cart = {}; // Object to store cart items
-
-// INCREASE QUANTITY
-function increaseQty(name, price, qty) {
-  if (!cart[name]) {
-    cart[name] = { price: price, qty: qty, count: 1 };
-  } else {
-    cart[name].count++;
-  }
-  updateCartUI();
+function getCart() {
+  return JSON.parse(localStorage.getItem(CART_KEY)) || [];
 }
 
-// DECREASE QUANTITY
-function decreaseQty(name) {
-  if (cart[name]) {
-    cart[name].count--;
-    if (cart[name].count <= 0) {
-      delete cart[name]; // remove item if count <= 0
-    }
-  }
-  updateCartUI();
+function saveCart(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  updateCartCount();
 }
 
-// UPDATE CART UI
-function updateCartUI() {
-  let totalCount = 0;
-
-  // Update each item's quantity display
-  document.querySelectorAll(".qty-control span").forEach(span => {
-    const itemName = span.id.replace("qty-", "");
-    if (cart[itemName]) {
-      span.innerText = cart[itemName].count;
-      totalCount += cart[itemName].count;
-    } else {
-      span.innerText = 0; // reset to 0 if item removed
-    }
-  });
-
-  // Update cart icon count
-  document.getElementById("cart-count").innerText = totalCount;
+function updateCartCount() {
+  const cart = getCart();
+  document.getElementById("cartCount").innerText =
+    cart.reduce((s, i) => s + i.quantity, 0);
 }
 
-// OPEN CART POPUP
+function addToCart(p) {
+  let cart = getCart();
+  let item = cart.find(i => i.product_id === p.product_id);
+
+  if (item) item.quantity += 1;
+  else cart.push({ ...p, quantity: 1 });
+
+  saveCart(cart);
+}
+
 function openCart() {
-  let modal = document.getElementById("cartModal");
-  let itemsDiv = document.getElementById("cartItems");
-  let total = 0;
-  itemsDiv.innerHTML = "";
-
-  for (let item in cart) {
-    let itemTotal = cart[item].price * cart[item].count;
-    total += itemTotal;
-    itemsDiv.innerHTML += `<p>${item} (${cart[item].qty}) × ${cart[item].count} = ₹${itemTotal}</p>`;
-  }
-
-  document.getElementById("cartTotal").innerText = "Total: ₹" + total;
-  modal.style.display = "flex";
+  document.getElementById("cartModal").style.display = "block";
+  renderCart();
 }
 
-// CLOSE CART POPUP
 function closeCart() {
   document.getElementById("cartModal").style.display = "none";
 }
 
-// SEND ORDER TO WHATSAPP
-function sendWhatsApp() {
-  let message = "Hello, I want to order:%0A";
+function renderCart() {
+  const cart = getCart();
+  let html = "";
   let total = 0;
 
-  for (let item in cart) {
-    let itemTotal = cart[item].price * cart[item].count;
-    total += itemTotal;
-    message += `${item} (${cart[item].qty}) x ${cart[item].count} = ₹${itemTotal}%0A`;
-  }
+  cart.forEach(i => {
+    const amt = i.price * i.quantity;
+    total += amt;
+    html += `<div class="cart-item">
+      ${i.product_name} × ${i.quantity} = ₹${amt}
+    </div>`;
+  });
 
-  message += `%0ATotal: ₹${total}`;
-
-  // SAVE TO GOOGLE SHEET
-  saveOrderToSheet(total);
-
-  // OPEN WHATSAPP
-  let url = "https://wa.me/919600391896?text=" + message;
-  window.open(url, "_blank");
+  document.getElementById("cartItems").innerHTML = html || "Cart empty";
+  document.getElementById("cartTotal").innerText = total;
 }
 
-</script>
-<script>
-// Toggle search bar visibility
-function toggleSearch() {
-  const searchBar = document.getElementById("searchBar");
-  searchBar.style.display = searchBar.style.display === "block" ? "none" : "block";
+async function placeOrder() {
+  const cart = getCart();
+  if (cart.length === 0) return alert("Cart is empty");
+
+  const customer = {
+    name: custName.value,
+    phone: custPhone.value,
+    email: custEmail.value,
+    address: custAddress.value
+  };
+
+  if (!customer.name || !customer.phone)
+    return alert("Name & phone required");
+
+  await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({ customer, items: cart })
+  });
+
+  let msg = "Apple Fresh Farm Order%0A";
+  cart.forEach(i => {
+    msg += `${i.product_name} × ${i.quantity} = ₹${i.price*i.quantity}%0A`;
+  });
+  msg += `Total: ₹${cart.reduce((s,i)=>s+i.price*i.quantity,0)}`;
+
+  // CLEAR CART AFTER ORDER ✅
+  localStorage.removeItem(CART_KEY);
+  updateCartCount();
+  closeCart();
+
+  window.open(`https://wa.me/91${customer.phone}?text=${msg}`, "_blank");
 }
 
-// Search function
-function searchProducts() {
-  const input = document.getElementById("searchInput").value.toLowerCase();
-  const products = document.querySelectorAll(".product-card");
+async function loadProducts() {
+  const res = await fetch(API_URL + "?action=chicken");
+  const data = await res.json();
 
-  products.forEach(product => {
-    const name = product.querySelector("h3").innerText.toLowerCase();
-    if (name.includes(input)) product.style.display = "block";
-    else product.style.display = "none";
+  const grid = document.getElementById("productGrid");
+  grid.innerHTML = "";
+
+  data.forEach(p => {
+    grid.innerHTML += `
+      <div class="card">
+        <img src="${p.product_image}">
+        <h3>${p.product_name}</h3>
+        <div class="price">₹${p.price}</div>
+        <button onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+      </div>`;
   });
 }
-</script>
-<!-- Floating Live Chat Button -->
-<a href="https://wa.me/+919600391896" target="_blank" class="live-chat-btn">
-  <i class="fab fa-whatsapp"></i> Live Chat
-</a>
 
+loadProducts();
+updateCartCount();
+</script>
 
 </body>
 </html>
